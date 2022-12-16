@@ -1,6 +1,7 @@
 // require packages used in the project
 const express = require('express')  //載入express
 const mongoose = require('mongoose')  //載入mongoose
+const exphbs = require('express-handlebars')
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -22,11 +23,14 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
+
 const port = 3000
 
-// routes setting
+// Todo 首頁
 app.get('/', (req, res) => {
-  res.send('Hello World!!')
+  res.render('index')
 })
 
 // start and listen on the Express server
